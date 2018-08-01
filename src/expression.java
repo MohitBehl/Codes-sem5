@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class expression {
 
@@ -15,14 +16,19 @@ public class expression {
 	}
 
 	static void solve(String expression) throws Exception {
-		System.out.println(solveHelper(expression));
-	}
-
-	static double solveHelper(String expression) throws Exception {
 		ArrayList<String> operands = new ArrayList<>();
 		ArrayList<Character> operators = new ArrayList<>();
 		parseExpression(expression, operands, operators);
 		System.out.println(operands + " " + operators);
+		System.out.println(solveHelper(operands, operators));
+	}
+
+	static void solveHelper1(ArrayList<String> operands, ArrayList<Character> operators) throws Exception {
+
+		Stack<Integer> obj = new Stack<>();
+	}
+
+	static double solveHelper(ArrayList<String> operands, ArrayList<Character> operators) throws Exception {
 		if (operators.size() != operands.size() - 1)
 			throw new Exception("invalid expression");
 		double result = Double.parseDouble(operands.get(0));
