@@ -20,17 +20,101 @@ public class expression {
 		ArrayList<Character> operators = new ArrayList<>();
 		parseExpression(expression, operands, operators);
 		System.out.println(operands + " " + operators);
-		System.out.println(solveHelper(operands, operators));
-	}
-
-	static void solveHelper1(ArrayList<String> operands, ArrayList<Character> operators) throws Exception {
-
-		Stack<Integer> obj = new Stack<>();
-	}
-
-	static double solveHelper(ArrayList<String> operands, ArrayList<Character> operators) throws Exception {
+		System.out.println("without DMAS:" + solveHelper(operands, operators));
+		System.out.println("With DMAS:" + solveHelper1(operands, operators));
 		if (operators.size() != operands.size() - 1)
 			throw new Exception("invalid expression");
+	}
+
+	static int precedence(char ch) {
+		int i = 0;
+		switch (ch) {
+		case '-':
+			i = 1;
+			break;
+		case '+':
+			i = 2;
+			break;
+		case '*':
+			i = 3;
+			break;
+		case '/':
+			i = 4;
+			break;
+		default:
+			return -1;
+		}
+		// System.out.println("precedence of " + ch + " :" + i);
+		return i;
+	}
+
+	static ArrayList<String> postfixCreator(ArrayList<String> operands, ArrayList<Character> operators) {
+		Stack<Character> obj = new Stack<>();
+		ArrayList<String> postfixExpression = new ArrayList<>();
+		postfixExpression.add(operands.get(0));
+		int operandIndex = 1;
+		int operatorIndex = 0;
+		boolean isOperator = true;
+		while (operandIndex < operands.size()) {
+			if (!isOperator) {
+				postfixExpression.add(operands.get(operandIndex));
+				operandIndex++;
+				isOperator = !isOperator;
+			} else if (isOperator) {
+				if (obj.isEmpty())
+					obj.push(operators.get(operatorIndex));
+				else {
+					char ch = operators.get(operatorIndex);
+					while (!obj.isEmpty() && precedence(ch) <= precedence(obj.peek())) {
+						postfixExpression.add(obj.pop() + "");
+					}
+					obj.push(ch);
+				}
+				operatorIndex++;
+				isOperator = !isOperator;
+			}
+		}
+		while (!obj.isEmpty())
+			postfixExpression.add(obj.pop() + "");
+		return postfixExpression;
+	}
+
+	static double solveHelper1(ArrayList<String> operands, ArrayList<Character> operators) throws Exception {
+		ArrayList<String> postExpression = postfixCreator(operands, operators);
+		System.out.println(postExpression);
+		Stack<Double> stack = new Stack<>();
+		int i = 0;
+		while (i < postExpression.size()) {
+			String str = postExpression.get(i);
+			if (str.equals("*") || str.equals("+") || str.equals("-") || str.equals("/")) {
+				Double op2 = stack.pop();
+				Double op1 = stack.pop();
+				switch (str) {
+				case "+":
+					stack.push(op1 + op2);
+					break;
+				case "-":
+					stack.push(op1 - op2);
+					break;
+				case "*":
+					stack.push(op1 * op2);
+					break;
+				case "/": {
+					if (op2 == 0.0)
+						throw new Exception("divide by zero exception");
+					stack.push(op1 / op2);
+				}
+					break;
+				}
+			} else {
+				stack.push(Double.parseDouble(str));
+			}
+			i++;
+		}
+		return stack.peek();
+	}
+
+	static double solveHelper(ArrayList<String> operands, ArrayList<Character> operators) {
 		double result = Double.parseDouble(operands.get(0));
 		int i = 1;
 		int j = 0;
