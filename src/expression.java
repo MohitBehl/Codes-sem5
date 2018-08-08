@@ -19,11 +19,15 @@ public class expression {
 		ArrayList<String> operands = new ArrayList<>();
 		ArrayList<Character> operators = new ArrayList<>();
 		parseExpression(expression, operands, operators);
-		System.out.println(operands + " " + operators);
-		System.out.println("without DMAS:" + solveHelper(operands, operators));
-		System.out.println("With DMAS:" + solveHelper1(operands, operators));
 		if (operators.size() != operands.size() - 1)
 			throw new Exception("invalid expression");
+		System.out.println(operands + " " + operators);
+		System.out.print("without DMAS:");
+		System.out.printf("%.2f", solveHelper(operands, operators));
+		System.out.println();
+		System.out.print("With DMAS:");
+		System.out.printf("%.2f", solveHelper1(operands, operators));
+		System.out.println();
 	}
 
 	static int precedence(char ch) {
@@ -129,6 +133,7 @@ public class expression {
 				result = result * oper;
 			else if (operator == '/')
 				result = result / oper;
+			// result = Precision.round(result,2);
 			i++;
 			j++;
 		}
