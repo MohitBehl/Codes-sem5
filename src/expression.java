@@ -6,13 +6,15 @@ public class expression {
 
 	public static void main(String[] args) {
 		Scanner scn = new Scanner(System.in);
-		String expression = scn.nextLine();
-		scn.close();
-		try {
-			solve(expression);
-		} catch (Exception e) {
-			System.out.println("error:" + e);
-		}
+		expression obj = new expression();
+		System.out.println(obj.toString());
+		// String expression = scn.nextLine();
+		// scn.close();
+		// try {
+		// solve(expression);
+		// } catch (Exception e) {
+		// System.out.println("error:" + e);
+		// }
 	}
 
 	static void solve(String expression) throws Exception {
