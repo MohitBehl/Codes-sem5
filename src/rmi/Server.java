@@ -1,5 +1,6 @@
 package rmi;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.lang.reflect.Method;
@@ -35,25 +36,33 @@ public class Server {
 
 		Class<?> anomynous = Class.forName(arr[0]);
 		Class<?> parameterTypes[] = null;
+		Object parameterValue[] = null;
 		if (numOfargs > 0) {
 			parameterTypes = new Class[numOfargs];
+			parameterValue = new Object[numOfargs];
 			int i = 4;
 			int j = 0;
 			while (i < arr.length) {
 				String type = arr[i];
-				if (type.equals("int"))
+				if (type.equals("int")) {
 					parameterTypes[j] = int.class;
-				else if (type.equals("double"))
+					parameterValue[j] = Integer.parseInt(arr[i + 1]);
+				} else if (type.equals("double")) {
 					parameterTypes[j] = double.class;
-				else if (type.equals("float"))
+					parameterValue[j] = Double.parseDouble(arr[i + 1]);
+				} else if (type.equals("float")) {
 					parameterTypes[j] = float.class;
-				else if (type.equals("boolean"))
+					parameterValue[j] = Double.parseDouble(arr[i + 1]);
+				} else if (type.equals("boolean")) {
 					parameterTypes[j] = boolean.class;
-				else if (type.equals("char"))
+					parameterValue[j] = Boolean.parseBoolean(arr[i + 1]);
+				} else if (type.equals("char")) {
 					parameterTypes[j] = char.class;
-				else if (type.equals("String"))
+					parameterValue[j] = arr[i + 1].charAt(0);
+				} else if (type.equals("String")) {
 					parameterTypes[j] = String.class;
-				else
+					parameterValue[j] = arr[i + 1];
+				} else
 					throw new Exception("invalid type found");
 				i += 2;
 				j++;
@@ -62,7 +71,8 @@ public class Server {
 		Object obj = anomynous.newInstance();
 		Method method = obj.getClass().getMethod(methodName, parameterTypes);
 		// method calling is made static , will come up with some solution soon
-		out.writeUTF(method.invoke(obj, Integer.parseInt(arr[5])) + "");
+		// out.writeUTF(method.invoke(obj, Integer.parseInt(arr[5])) + "");
+		out.writeUTF(method.invoke(obj, parameterValue) + "");
 	}
 
 	public static void main(String args[]) {
