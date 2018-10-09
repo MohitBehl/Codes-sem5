@@ -1,0 +1,50 @@
+<html>
+    <head>
+            <link rel="stylesheet" type="text/css" href="style.css">
+    </head>    
+    <body>
+    <div class="template_1">
+        <div class="textTemplate" ><div class="finalTemplate" id="resultText"></div></div>
+        <table style="padding: 10;border-spacing: 5; ">
+            <tr>
+                <td><button class="num" onclick="keyboard(0);">0</button></td>
+                <td><button class="num" onclick="keyboard(1);">1</button></td>
+                <td><button class="num" onclick="keyboard(2);">2</button></td>
+                <td><button class="num" onclick="keyboard(3);">3</button></td>
+                <td><button onclick="keyboard('add');">+</button></td>
+            </tr>
+            <tr>
+                <td><button class="num" onclick="keyboard(4);">4</button></td>
+                <td><button class="num" onclick="keyboard(5);">5</button></td>
+                <td><button class="num" onclick="keyboard(6);">6</button></td>
+                <td><button class="num" onclick="keyboard(7);">7</button></td>
+                <td><button onclick="keyboard('subtract');">-</button></td>
+            </tr>
+            <tr>
+                <td><button class="num" onclick="keyboard(8)";>8</button></td>
+                <td><button class="num" onclick="keyboard(9);">9</button></td>
+                <td><button class="num" onclick="keyboard('A');">A</button></td>
+                <td><button class="num" onclick="keyboard('B');">B</button></td>
+                <td><button onclick="keyboard('multiply');">*</button></td>
+            </tr>
+            <tr>
+                <td><button class="num" onclick="keyboard('C');">C</button></td>
+                <td><button class="num" onclick="keyboard('D');">D</button></td>
+                <td><button class="num" onclick="keyboard('E');">E</button></td>
+                <td><button class="num" onclick="keyboard('F');">F</button></td>
+                <td><button onclick="keyboard('divide');">/</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="keyboard('negation');">~</button></td>
+                <td><button onclick="keyboard('and');">&</button></td>
+                <td><button onclick="keyboard('or');">|</button></td>
+                <td><button onclick="keyboard('modulo');">%</button></td>
+                <td><button onclick="keyboard('AC');">AC</button></td>
+            </tr>
+        </table>
+        <button class="equalDesign" onclick="keyboard('equals')">=</button>
+
+    </div>
+    <script src="IndexWorking.js"></script>
+    </body>
+</html>

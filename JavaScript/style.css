@@ -1,0 +1,46 @@
+button {
+    border-style: dashed;
+    border: 1px solid lightblue;
+    text-align: center;
+    font-size: 15px;
+    height: 50px;
+    width: 50px;
+    padding: 5px 5px;    
+    border-radius: 10px;
+}
+table{
+    border-radius: 10px;
+    background-color: whitesmoke;
+}
+.num{
+    background-color: blue;
+}
+.template_1{
+    position: fixed;
+    top: 15%;
+    left: 40%;
+    background-color:whitesmoke;
+    border: 5px  groove green;
+    border-style: double;
+    border-radius: 20px;
+}
+.textTemplate{
+    width: 300px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: white;
+}
+.finalTemplate{
+    text-align: right;
+    padding-top: 45px;
+    padding-right: 10px;
+}
+.equalDesign{
+    margin-bottom: 10px;
+    margin-left: 15px;
+    width: 276px;
+}
