@@ -33,11 +33,18 @@ table{
     margin-right: 5px;
     margin-left: 5px;
     background-color: white;
+    overflow: scroll;
 }
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 .finalTemplate{
     text-align: right;
     padding-top: 45px;
     padding-right: 10px;
+    
 }
 .equalDesign{
     margin-bottom: 10px;
