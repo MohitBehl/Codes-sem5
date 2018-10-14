@@ -4,7 +4,7 @@ operators = ["/","-","&","|","+","*","~","%"];
 
 function mapping(key)
 {
-    console.log("recieved!!!!:"+key+typeof(key));
+    console.log("recieved in mapping: "+key+" type: "+typeof(key));
     switch(key){
         case "0": return 0;break;
         case "1": return 1;break;
@@ -34,7 +34,7 @@ function mapping(key)
 }
 
 function reverseMap(key){
-    console.log("recieved!!!!:"+key+typeof(key));
+    console.log("recieved in reverse mapping: "+key+" type: "+typeof(key));
     switch(key){
         case "0": return "0";break;
         case "1": return "1";break;
@@ -151,7 +151,13 @@ function evaluate(){
         else
         str += total[i];
     }
+    try{
     var result = eval(str);
+    }
+    catch(e){
+        alert("EXPRESSION ERROR FOUND\nclick ok to reload");
+        document.location.reload();
+    }
     console.log("expression in decimal:"+str);
     console.log("result in decimal:"+result);
     console.log("result in hexadecimal:"+result.toString("16"));
@@ -160,13 +166,21 @@ function evaluate(){
 
 function convertToHexDecimal(hexNum){
     hexNum = ""+hexNum;
-    console.log("recieved:"+hexNum);
+    console.log("recieved in convert:"+hexNum);
     decNum = 0;
     arr = hexNum.split('');
     var index = 0;
+    var flag = false;
     for(var i=arr.length-1;i>=0;i--,index++){
+        if(arr[i] == '-' && flag == false){
+            flag = true;
+            continue;
+        }
         decNum += mapping(arr[i])*Math.pow(16,index);
     }
-    console.log("hello"+decNum);
+    if(flag == true){
+        decNum = "-"+decNum;
+    }
+    console.log("converted: "+hexNum+" to: "+decNum);
     return decNum;
 }
