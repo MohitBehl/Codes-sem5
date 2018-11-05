@@ -5,6 +5,11 @@ public class Account {
 	int id;
 	private double balance;
 	private String date;
+	private int password;
+
+	void setPassword(int password) {
+		this.password = password;
+	}
 
 	void setId(int id) {
 		this.id = id;
@@ -36,5 +41,9 @@ public class Account {
 
 	String getDate() {
 		return date;
+	}
+
+	int getPassword() {
+		return this.password;
 	}
 }

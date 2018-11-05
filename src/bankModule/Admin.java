@@ -32,8 +32,45 @@ public class Admin {
 		}
 	}
 
+	void updateBalance(int id, Double balance) {
+		String query = "UPDATE `account` SET `acBalance`=" + balance + "WHERE acId = " + id;
+		try {
+			stmt.executeUpdate(query);
+		} catch (SQLException e) {
+			System.out.println("invalid query or connection problem");
+			e.printStackTrace();
+		}
+	}
+
+	int getPassword(int id) {
+		String query = "SELECT `acId`, `acHolderName`, `acDate`, `acBalance`,`acPassword`FROM `account` WHERE acId = "
+				+ id;
+		try {
+			ResultSet result = stmt.executeQuery(query);
+			result.next();
+			return result.getInt("acPassword");
+		} catch (SQLException e) {
+			System.out.println("invalid query or connection problem");
+		}
+		return -1;
+	}
+
+	double getBalance(int id) {
+		String query = "SELECT `acId`, `acHolderName`, `acDate`, `acBalance`,`acPassword`FROM `account` WHERE acId = "
+				+ id;
+		try {
+			ResultSet result = stmt.executeQuery(query);
+			result.next();
+			return result.getInt("acBalance");
+		} catch (SQLException e) {
+			System.out.println("invalid query or connection problem");
+		}
+		return -1;
+	}
+
 	static boolean searchById(int id) {
-		String query = "SELECT `acId`, `acHolderName`, `acDate`, `acBalance`FROM `account` WHERE acId = " + id;
+		String query = "SELECT `acId`, `acHolderName`, `acDate`, `acBalance`,`acPassword`FROM `account` WHERE acId = "
+				+ id;
 		try {
 			ResultSet result = stmt.executeQuery(query);
 			int k = 0;
@@ -60,6 +97,7 @@ public class Admin {
 		Account newAc = new Account();
 		newAc.setId(generateId());
 		scn.nextLine();
+
 		System.out.println("Enter name of user:");
 		String name = scn.nextLine();
 		newAc.setName(name);
@@ -71,11 +109,18 @@ public class Admin {
 		}
 		newAc.setBalance(bal);
 		newAc.setDate(formatter.format(new Date()));
+		System.out.println("enter password (less than or equal to 4 digits) :");
+		int password = scn.nextInt();
+		newAc.setPassword(password);
+
+		Client tempObj = new Client();
 		try {
 			// System.out.println(newAc.getId() + " " + newAc.getBalance());
-			String query = "INSERT INTO `account`(`acId`, `acHolderName`, `acDate`, `acBalance`) VALUES ('"
+			String query = "INSERT INTO `account`(`acId`, `acHolderName`, `acDate`, `acBalance`,`acPassword`) VALUES ('"
 					+ newAc.getId() + "','" + newAc.getName() + "','" + newAc.getDate() + "','" + newAc.getBalance()
-					+ "')";
+					+ "','" + newAc.getPassword() + "')";
+
+			tempObj.addTransaction(newAc.getDate(), newAc.getId(), "deposit", newAc.getBalance(), 0.0);
 			stmt.executeUpdate(query);
 			System.out.println("insertion successful");
 		} catch (SQLException e) {
@@ -167,10 +212,11 @@ public class Admin {
 			String query = "SELECT `acId`, `trDate`, `trType`, `typeAmount`, `trBalance` FROM `transaction` WHERE acID = "
 					+ id;
 			ResultSet result = stmt.executeQuery(query);
+			System.out.println("acID \t trDate \t trType \t typeAmount \t trBalance");
 			while (result.next()) {
 				System.out.println(
-						result.getInt("acID") + " " + result.getString("trDate") + " " + result.getString("trType")
-								+ " " + result.getInt("typeAmount") + " " + result.getDouble("trBalance"));
+						result.getInt("acID") + " \t " + result.getString("trDate") + " \t " + result.getString("trType")
+								+ " \t " + result.getInt("typeAmount") + " \t " + result.getDouble("trBalance"));
 			}
 			System.out.println("print successful");
 		} catch (SQLException e) {
